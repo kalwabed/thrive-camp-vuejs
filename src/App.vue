@@ -1,29 +1,37 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref, Suspense } from 'vue'
+import useTodo from '@/composables/use-todo'
+import TodoList from './components/todo-list.vue'
 
-const msg = ref('Thrive vuejs')
-const todos = reactive([])
+const title = ref('')
+
+const { addTodo } = useTodo()
 
 function handleSubmit() {
-  // setData([...todos, msg.value])
-  todos.push(msg.value)
-  console.log(todos)
+  addTodo({
+    id: Date.now(),
+    title: title.value,
+    completed: false
+  })
 }
 </script>
 
 <template>
   <h1>Hello world!</h1>
-  <form @reset="msg = ''" @submit.prevent="handleSubmit">
-    <input v-model="msg" />
+  <form @reset="title = ''" @submit.prevent="handleSubmit">
+    <input v-model="title" />
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
   </form>
 
-  <ul>
-    <li v-for="(todo, index) in todos" :key="index">
-      <span v-show="index < 3">
-        {{ todo }}
-      </span>
-    </li>
-  </ul>
+  <Suspense>
+    <TodoList />
+    <template #fallback> loading </template>
+  </Suspense>
 </template>
+
+<style scoped>
+button {
+  margin-left: 10px;
+}
+</style>
