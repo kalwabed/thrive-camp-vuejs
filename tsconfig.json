@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "strict": false
+    "strict": false,
+    "types": ["vitest/globals"]
   },
   "files": ["./src/**/*.ts"],
   "references": [

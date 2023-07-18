@@ -1,19 +1,23 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 const props = defineProps<{
   msg: string
 }>()
 
+const welcomeMessage = ref(props.msg)
+
 const greet = 'greetings'
 
 function showProps() {
-  alert(props.msg)
+  welcomeMessage.value = 'oit'
 }
 </script>
 
 <template>
   <div :class="greet">
-    <h1 class="green">{{ msg }}</h1>
-    <button @click="showProps">CLick me</button>
+    <h1 data-testid="message" class="green">{{ welcomeMessage }}</h1>
+    <button data-testid="btn-msg" @click="showProps">Click me</button>
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
